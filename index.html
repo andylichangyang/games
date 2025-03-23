@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monster Survivors - Survive the Monster Apocalypse | SoRecall</title>
-    <meta name="description" content="Play Monster Survivors online - Battle endless waves of monsters in this thrilling survival game. No download required, play instantly in your browser!">
+    <title>SoRecall - 免费在线游戏平台 | 即玩无需下载</title>
+    <meta name="description" content="SoRecall提供各类免费在线游戏，无需下载，即点即玩。动作、冒险、解谜、策略等多种类型游戏等你来挑战！">
     <link rel="canonical" href="https://sorecall.com/">
     <style>
         :root {
-            /* Apple-inspired color palette */
+            /* 苹果风格配色 */
             --primary-blue: #007AFF;
             --secondary-blue: #5AC8FA;
             --primary-green: #34C759;
             --primary-red: #FF3B30;
             --primary-orange: #FF9500;
             --primary-purple: #AF52DE;
+            --primary-pink: #FF2D55;
+            --primary-yellow: #FFCC00;
             --background-light: #F2F2F7;
             --background-dark: #1C1C1E;
             --text-primary-light: #000000;
             --text-secondary-light: #3A3A3C;
             --text-tertiary-light: #8E8E93;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -39,19 +42,75 @@
             background-color: var(--primary-blue);
             color: white;
             padding: 1rem;
-            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 2rem 1rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            margin-bottom: 2rem;
+            border-radius: 12px;
         }
 
         h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: white;
         }
 
         h2 {
@@ -64,58 +123,11 @@
 
         .tagline {
             font-size: 1.2rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             font-weight: 300;
-        }
-
-        .game-container {
-            margin: 2rem 0;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .game-wrapper {
-            position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-        }
-
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .game-info {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .feature-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card h3 {
-            color: var(--primary-purple);
-            margin-bottom: 1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-button {
@@ -126,7 +138,6 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 1rem;
             transition: background-color 0.3s;
         }
 
@@ -134,88 +145,459 @@
             background-color: var(--primary-red);
         }
 
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .game-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .game-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .game-content {
+            padding: 1.2rem;
+        }
+
+        .game-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary-light);
+        }
+
+        .game-description {
+            color: var(--text-secondary-light);
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .game-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: var(--background-light);
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary-light);
+        }
+
+        .game-link {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .game-link:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        .categories {
+            margin: 3rem 0;
+        }
+
+        .scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-tertiary-light) transparent;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .scroll-container::-webkit-scrollbar-thumb {
+            background-color: var(--text-tertiary-light);
+            border-radius: 6px;
+        }
+
+        .category-pills {
+            display: inline-flex;
+            gap: 1rem;
+            padding: 0 0.5rem;
+        }
+
+        .category-pill {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background-color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text-primary-light);
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .category-pill:hover, .category-pill.active {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .featured {
+            margin: 3rem 0;
+        }
+
+        .featured-game {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .featured-img {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .featured-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .featured-description {
+            margin-bottom: 1.5rem;
+        }
+
         footer {
             background-color: var(--background-dark);
             color: white;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
             text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 3rem;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--background-dark);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 99;
+            }
+
+            nav.active {
+                transform: translateX(0);
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 1rem 0;
+            }
+
             h1 {
                 font-size: 2rem;
             }
 
-            h2 {
-                font-size: 1.5rem;
+            .featured-game {
+                grid-template-columns: 1fr;
             }
 
-            .tagline {
-                font-size: 1rem;
-            }
-
-            .game-info, .feature-card {
-                padding: 1.2rem;
+            .featured-img {
+                min-height: 200px;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>Monster Survivors</h1>
-            <p class="tagline">Battle endless waves of monsters in this thrilling survival adventure!</p>
+        <div class="header-container">
+            <a href="/" class="logo">SoRecall</a>
+            <button class="mobile-menu-btn">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/games/action">动作游戏</a></li>
+                    <li><a href="/games/adventure">冒险游戏</a></li>
+                    <li><a href="/games/puzzle">解谜游戏</a></li>
+                    <li><a href="/games/strategy">策略游戏</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main class="container">
-        <div class="game-container">
-            <div class="game-wrapper">
-                <iframe src="https://cloud.onlinegames.io/games/2025/unity/monster-survivors/index-og.html" allow="fullscreen" title="Play Monster Survivors Online"></iframe>
-            </div>
-        </div>
-
-        <section class="game-info">
-            <h2>About Monster Survivors</h2>
-            <p>Monster Survivors is an action-packed survival game where you must fight against relentless waves of monsters. Use your skills, collect power-ups, and upgrade your character to survive as long as possible in this challenging adventure.</p>
-            
-            <h2>How to Play</h2>
-            <p>Use WASD or arrow keys to move, and your character will automatically attack nearby monsters. Collect experience gems to level up and choose new upgrades. Survive as long as possible and defeat epic bosses to become the ultimate Monster Survivor!</p>
-
-            <h2>Game Features</h2>
-            <div class="features">
-                <div class="feature-card">
-                    <h3>Endless Gameplay</h3>
-                    <p>Face increasingly difficult waves of monsters in a never-ending battle for survival. How long can you last?</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Character Progression</h3>
-                    <p>Level up your character, unlock new abilities, and upgrade your weapons to become more powerful.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Diverse Enemies</h3>
-                    <p>Fight against various monster types, each with unique behaviors and attack patterns.</p>
-                </div>
-            </div>
-
-            <h2>Tips & Strategies</h2>
-            <ul>
-                <li>Focus on movement and positioning to avoid getting surrounded</li>
-                <li>Choose upgrades that complement your playstyle</li>
-                <li>Prioritize killing smaller monsters first to prevent being overwhelmed</li>
-                <li>Don't forget to collect experience gems after defeating monsters</li>
-            </ul>
-
-            <a href="#" class="cta-button">Share Your High Score</a>
+    <div class="container">
+        <section class="hero">
+            <h1>最好玩的在线游戏平台</h1>
+            <p class="tagline">数百款免费游戏，无需下载，即点即玩。从动作冒险到解谜策略，总有一款适合你！</p>
+            <a href="#games" class="cta-button">开始游戏</a>
         </section>
-    </main>
+
+        <section class="featured">
+            <h2>热门推荐</h2>
+            <div class="featured-game">
+                <img src="/api/placeholder/600/400" alt="Monster Survivors" class="featured-img">
+                <div class="featured-content">
+                    <h3 class="featured-title">Monster Survivors</h3>
+                    <p class="featured-description">在这款刺激的生存游戏中与无尽的怪物浪潮战斗！升级你的角色，解锁新技能，看看你能在怪物围攻中生存多久。</p>
+                    <div class="game-tags">
+                        <span class="tag">动作</span>
+                        <span class="tag">生存</span>
+                        <span class="tag">角色扮演</span>
+                    </div>
+                    <a href="/games/monster-survivors" class="cta-button">立即游戏</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories">
+            <h2>游戏分类</h2>
+            <div class="scroll-container">
+                <div class="category-pills">
+                    <a href="#" class="category-pill active">全部</a>
+                    <a href="#" class="category-pill">动作</a>
+                    <a href="#" class="category-pill">冒险</a>
+                    <a href="#" class="category-pill">策略</a>
+                    <a href="#" class="category-pill">角色扮演</a>
+                    <a href="#" class="category-pill">解谜</a>
+                    <a href="#" class="category-pill">射击</a>
+                    <a href="#" class="category-pill">休闲</a>
+                    <a href="#" class="category-pill">模拟</a>
+                    <a href="#" class="category-pill">多人</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="games">
+            <h2>所有游戏</h2>
+            <div class="game-grid">
+                <div class="game-card">
+                    <img src="/api/placeholder/400/300" alt="Monster Survivors" class="game-img">
+                    <div class="game-content">
+                        <h3 class="game-title">Monster Survivors</h3>
+                        <p class="game-description">在怪物潮汐中生存的刺激冒险！</p>
+                        <div class="game-tags">
+                            <span class="tag">动作</span>
+                            <span class="tag">生存</span>
+                        </div>
+                        <a href="/games/monster-survivors" class="game-link">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="/api/placeholder/400/300" alt="Puzzle Quest" class="game-img">
+                    <div class="game-content">
+                        <h3 class="game-title">Puzzle Quest</h3>
+                        <p class="game-description">挑战你的智力，解开所有谜题！</p>
+                        <div class="game-tags">
+                            <span class="tag">解谜</span>
+                            <span class="tag">益智</span>
+                        </div>
+                        <a href="/games/puzzle-quest" class="game-link">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="/api/placeholder/400/300" alt="Sky Defenders" class="game-img">
+                    <div class="game-content">
+                        <h3 class="game-title">Sky Defenders</h3>
+                        <p class="game-description">保卫天空，击退敌军飞机！</p>
+                        <div class="game-tags">
+                            <span class="tag">射击</span>
+                            <span class="tag">动作</span>
+                        </div>
+                        <a href="/games/sky-defenders" class="game-link">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="/api/placeholder/400/300" alt="Kingdom Builder" class="game-img">
+                    <div class="game-content">
+                        <h3 class="game-title">Kingdom Builder</h3>
+                        <p class="game-description">建立并扩展你的王国，征服敌人！</p>
+                        <div class="game-tags">
+                            <span class="tag">策略</span>
+                            <span class="tag">模拟</span>
+                        </div>
+                        <a href="/games/kingdom-builder" class="game-link">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="/api/placeholder/400/300" alt="Racing Challenge" class="game-img">
+                    <div class="game-content">
+                        <h3 class="game-title">Racing Challenge</h3>
+                        <p class="game-description">体验极速赛车的刺激快感！</p>
+                        <div class="game-tags">
+                            <span class="tag">赛车</span>
+                            <span class="tag">休闲</span>
+                        </div>
+                        <a href="/games/racing-challenge" class="game-link">开始游戏</a>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <img src="/api/placeholder/400/300" alt="Adventure Quest" class="game-img">
+                    <div class="game-content">
+                        <h3 class="game-title">Adventure Quest</h3>
+                        <p class="game-description">踏上探索未知世界的奇幻旅程！</p>
+                        <div class="game-tags">
+                            <span class="tag">冒险</span>
+                            <span class="tag">角色扮演</span>
+                        </div>
+                        <a href="/games/adventure-quest" class="game-link">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 SoRecall.com - All rights reserved</p>
-            <p>Monster Survivors is an online browser game. Play instantly without downloads!</p>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="/about">网站简介</a></li>
+                    <li><a href="/contact">联系我们</a></li>
+                    <li><a href="/faq">常见问题</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>游戏分类</h3>
+                <ul>
+                    <li><a href="/games/action">动作游戏</a></li>
+                    <li><a href="/games/adventure">冒险游戏</a></li>
+                    <li><a href="/games/puzzle">解谜游戏</a></li>
+                    <li><a href="/games/strategy">策略游戏</a></li>
+                    <li><a href="/games/rpg">角色扮演</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>热门游戏</h3>
+                <ul>
+                    <li><a href="/games/monster-survivors">Monster Survivors</a></li>
+                    <li><a href="/games/puzzle-quest">Puzzle Quest</a></li>
+                    <li><a href="/games/sky-defenders">Sky Defenders</a></li>
+                    <li><a href="/games/kingdom-builder">Kingdom Builder</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>支持</h3>
+                <ul>
+                    <li><a href="/privacy">隐私政策</a></li>
+                    <li><a href="/terms">服务条款</a></li>
+                    <li><a href="/cookies">Cookie 政策</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 SoRecall.com - 保留所有权利</p>
         </div>
     </footer>
+
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // 点击导航项关闭菜单
+        const navItems = document.querySelectorAll('nav ul li a');
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
